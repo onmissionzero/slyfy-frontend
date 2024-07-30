@@ -1,8 +1,10 @@
-import React from 'react';
+import usePlayer from "../contexts/player";
 
-const NowPlaying = ({ songInfo }) => {
-  const { cover_art, track_name, spotify_url, artists } = songInfo;
 
+const NowPlaying = () => {
+
+  const { cover_art, track_name, artists, spotify_url } = usePlayer();
+  
   return (
     <div className="flex justify-start items-center bg-[#242424] h-20 w-full sticky top-0 z-10 px-4 shadow-2xl shadow-black font-palanquin">
       <a href={spotify_url} target="_blank" rel="noopener noreferrer" className="m-2">
