@@ -9,6 +9,7 @@ const Seo = ({ title, description, image, url }) => {
       <meta property="og:image" content={image} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="Slyfy" />
+      <meta property="og:url" content={url} />
     </Helmet>
   );
 };
