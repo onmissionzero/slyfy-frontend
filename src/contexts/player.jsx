@@ -16,7 +16,12 @@ export const PlayerProvider = ({ children }) => {
     const fetchPlayer = async () => {
         try {
             const backendURL = import.meta.env.VITE_BACKEND_URL;
-            const response = await fetch(`${backendURL}/lyrics`, {credentials: "include"});
+            const response = await fetch(`${backendURL}/lyrics`, {
+                credentials: "include",
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
             if (!response.ok) {
                 const error = await response.json();
                 setPlayer({ error: error.error });
