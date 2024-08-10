@@ -26,8 +26,8 @@ function Home() {
       <Seo
       title="Home | Slyfy"
       description="Lyrics wherever you want."
-      image="https://example.com/path/to/image.jpg"
-      url="/home"
+      image="https://raw.githubusercontent.com/onmissionzero/slyfy-frontend/main/public/opengraph-image.png"
+      url="https://slyfy.vercel.app/"
       />
       <Header />
       <Player />

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useProfile from "../contexts/profile";
 
 import Header from "../components/Header";
+import Seo from "../components/Seo";
 
 function Settings() {
   const navigate = useNavigate();
@@ -24,8 +25,8 @@ function Settings() {
       <Seo
       title="Settings | Slyfy"
       description="Set your settings for Slyfy."
-      image="https://example.com/path/to/image.jpg"
-      url="/settings"
+      image="https://raw.githubusercontent.com/onmissionzero/slyfy-frontend/main/public/opengraph-image.png"
+      url="https://slyfy.vercel.app/settings"
       />
       <Header />
       <div className="">

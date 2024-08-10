@@ -29,8 +29,8 @@ function Login() {
       <Seo
       title="Login | Slyfy"
       description="Login to Slyfy."
-      image="https://example.com/path/to/image.jpg"
-      url="/login"
+      image="https://raw.githubusercontent.com/onmissionzero/slyfy-frontend/main/public/opengraph-image.png"
+      url="https://slyfy.vercel.app/login"
       />
       <Button text="Login" handle={handleLogin} />
       <div
