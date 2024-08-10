@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
+import { HelmetProvider } from 'react-helmet-async';
 
 import Layout from './Layout';
 import Login from './pages/Login';
@@ -32,8 +33,10 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ProfileProvider>
-      <RouterProvider router={router} />
-    </ProfileProvider>
+    <HelmetProvider>
+      <ProfileProvider>
+        <RouterProvider router={router} />
+      </ProfileProvider>
+    </HelmetProvider>
   </React.StrictMode>
 )

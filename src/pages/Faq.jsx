@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import FaqItem from "../components/FaqItem";
 import Header from "../components/Header";
 import useProfile from "../contexts/profile";
+import Seo from "../components/Seo";
 
 function Faq() {
   const { profile } = useProfile();
@@ -31,6 +32,13 @@ function Faq() {
   ];
 
   return (
+    <>
+    <Seo
+      title="FAQ | Slyfy"
+      description="Read the Frequently Asked Questions."
+      image="https://example.com/path/to/image.jpg"
+      url="/faq"
+    />
     <div className="min-h-screen text-white font-palanquin w-full overflow-hidden">
       <section className="flex flex-col items-center">
         {profile ? (
@@ -60,6 +68,7 @@ function Faq() {
         </div>
       </section>
     </div>
+    </>
   );
 }
 

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/Button';
 import useProfile from '../contexts/profile';
+import Seo from "../components/Seo";
 
 function Login() {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -25,6 +26,12 @@ function Login() {
 
   return (
     <>
+      <Seo
+      title="Login | Slyfy"
+      description="Login to Slyfy."
+      image="https://example.com/path/to/image.jpg"
+      url="/login"
+      />
       <Button text="Login" handle={handleLogin} />
       <div
         className="fixed top-4 right-4 group cursor-pointer flex items-center"

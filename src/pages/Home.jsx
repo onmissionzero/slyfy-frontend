@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header";
 import Player from "../components/Player";
+import Seo from "../components/Seo";
 
 import useProfile from "../contexts/profile";
 
@@ -22,6 +23,12 @@ function Home() {
 
   return (
     <>
+      <Seo
+      title="Home | Slyfy"
+      description="Lyrics wherever you want."
+      image="https://example.com/path/to/image.jpg"
+      url="/home"
+      />
       <Header />
       <Player />
     </>

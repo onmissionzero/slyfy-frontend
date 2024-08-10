@@ -21,6 +21,12 @@ function Settings() {
 
   return (
     <>
+      <Seo
+      title="Settings | Slyfy"
+      description="Set your settings for Slyfy."
+      image="https://example.com/path/to/image.jpg"
+      url="/settings"
+      />
       <Header />
       <div className="">
         <h1 className="text-white font-montserrat">Settings</h1>
