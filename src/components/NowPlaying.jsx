@@ -1,19 +1,36 @@
 import usePlayer from "../contexts/player";
 
-
 const NowPlaying = () => {
 
-  const { cover_art, track_name, artists, spotify_url } = usePlayer();
-  
+  const { player } = usePlayer();
+  const {
+    cover_art = "",
+    spotify_url = "",
+    track_name = "Track Name",
+    artists = "Artists",
+  } = player || {};
+
   return (
-    <div className="flex justify-start items-center bg-[#242424] h-20 w-full sticky top-0 z-10 px-4 shadow-2xl shadow-black font-palanquin">
-      <a href={spotify_url} target="_blank" rel="noopener noreferrer" className="m-2">
+    <div className="flex items-center bg-[#242424] h-20 w-full sticky top-0 z-10 px-4 shadow-2xl shadow-black font-palanquin">
+      <a 
+        href={spotify_url} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="flex m-2 relative group"
+      >
         {cover_art && (
-          <img
-            src={cover_art}
-            alt="Cover Art"
-            className="w-14 h-14 rounded-full transition duration-300 ease-in-out transform hover:scale-110"
-          />
+          <div className="relative">
+            <img
+              src={cover_art}
+              alt="Cover Art"
+              className="w-14 h-14 rounded-full"
+            />
+            <img
+              src="/arrow-up-right.svg"
+              alt="Arrow Icon"
+              className="w-3 h-3 absolute top-0 right-0 transform translate-x-1 -translate-y-1 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+            />
+          </div>
         )}
       </a>
       <div className="ml-2">

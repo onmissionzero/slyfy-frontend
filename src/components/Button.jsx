@@ -1,6 +1,6 @@
 
 
-const LoginButton = ({ text, handle }) => {
+const Button = ({ text, handle }) => {
     return (
         <button
         onClick={handle}
@@ -12,4 +12,4 @@ const LoginButton = ({ text, handle }) => {
     );
 }
 
-export default LoginButton;
+export default Button;

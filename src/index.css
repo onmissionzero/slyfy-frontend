@@ -22,7 +22,7 @@
     border-radius: 5px;
 }
  
-/* Handle on hover */
+/* Handle but hover xD */
 ::-webkit-scrollbar-thumb:hover {
     background: #dbdbdb;
 }
@@ -30,3 +30,8 @@
 ::-webkit-scrollbar-corner {
     background: #121212;
 }
+
+.transition-width {
+    transition: width 0.7s ease-in-out;
+  }
+  
