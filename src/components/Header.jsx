@@ -67,9 +67,15 @@ const Header = () => {
             <div className="flex justify-between items-center w-full text-white font-montserrat bg-[#121212] px-4 h-16 rounded-b-lg">
                 <h2>Hello, {display_name}</h2>
                 <h1
-                    className="font-bold text-3xl cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
+                    className="flex items-center font-bold text-3xl cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
                     onClick={() => navigate('/')}
                 >
+                    <img
+                    src="./android-chrome-512x512.png"
+                    width={50}
+                    height={50}
+                    alt="Slyfy Logo"
+                    />
                     Slyfy
                 </h1>
                 <img

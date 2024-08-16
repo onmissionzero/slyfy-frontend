@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/Button';
@@ -8,13 +7,7 @@ import Seo from "../components/Seo";
 function Login() {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
-  const { profile } = useProfile();
-
-  useEffect(() => {
-    if (profile) {
-      navigate('/');
-    }
-  }, [profile, navigate]);
+  const { profile, loading } = useProfile();
 
   const handleLogin = () => {
     window.location.replace(`${backendURL}/authorize`);
@@ -23,6 +16,14 @@ function Login() {
   const handleFAQClick = () => {
     navigate('/faq');
   };
+
+  if (loading) {
+    return <div className="text-white font-palanquin font-3xl">Loading...</div>;
+  }
+  else if(profile) {
+    navigate('/');
+    return <div className="text-white font-palanquin font-3xl">Loading...</div>;
+  }
 
   return (
     <>
