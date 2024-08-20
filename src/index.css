@@ -34,4 +34,21 @@
 .transition-width {
     transition: width 0.7s ease-in-out;
   }
-  
+   
+::-webkit-progress-bar {
+    width: 100%;
+    height: 100%;
+    background-color: #363636;
+    border-radius: 5px;
+}
+
+/* For Firefox */
+::-moz-progress-bar {
+    background-color: #363636;
+    border-radius: 5px;
+}
+
+::-webkit-progress-value {
+    background-color: #dbdbdb;
+    border-radius: 5px;
+}

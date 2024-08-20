@@ -22,8 +22,6 @@ const Header = () => {
                 method: 'POST',
                 credentials: 'include'
             });
-
-            localStorage.removeItem('profile');
             setShowDropdown(false);
             updateProfile(null);
             navigate('/login');
@@ -65,9 +63,9 @@ const Header = () => {
     return (
         <>
             <div className="flex justify-between items-center w-full text-white font-montserrat bg-[#121212] px-4 h-16 rounded-b-lg">
-                <h2>Hello, {display_name}</h2>
+                <h2 className="md:text-base text-sm">Hello, {display_name}</h2>
                 <h1
-                    className="flex items-center font-bold text-3xl cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
+                    className="flex items-center font-bold md:text-3xl text-xl cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
                     onClick={() => navigate('/')}
                 >
                     <img

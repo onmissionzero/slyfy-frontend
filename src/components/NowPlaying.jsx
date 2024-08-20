@@ -1,17 +1,18 @@
 import usePlayer from "../contexts/player";
+import ProgressBar from "./ProgressBar";
 
 const NowPlaying = () => {
-
-  const { player } = usePlayer();
+  const { player, simulatedProgress } = usePlayer();
   const {
-    cover_art = "",
+    cover_art = "https://fakeimg.pl/64x64/000000/ffffff?text=+",
     spotify_url = "",
     track_name = "Track Name",
     artists = "Artists",
+    duration = 69
   } = player || {};
 
   return (
-    <div className="flex items-center bg-[#242424] h-20 w-full sticky top-0 z-10 px-4 shadow-2xl shadow-black font-palanquin">
+    <div className="flex items-center bg-[#242424] h-20 w-full px-4 shadow-2xl shadow-black font-palanquin overflow-hidden">
       <a 
         href={spotify_url} 
         target="_blank" 
@@ -33,9 +34,12 @@ const NowPlaying = () => {
           </div>
         )}
       </a>
-      <div className="ml-2">
-        <p className="text-white text-2xl">{track_name}</p>
-        <p className="text-[#858585] text-md">{artists}</p>
+      <div className="ml-2 flex-1">
+        <p className="text-white md:text-2xl text-xl">{track_name}</p>
+        <p className="text-[#858585] md:text-base text-sm">{artists}</p>
+      </div>
+      <div className="flex-grow m-2">
+        <ProgressBar duration={duration} progress={simulatedProgress} />
       </div>
     </div>
   );
