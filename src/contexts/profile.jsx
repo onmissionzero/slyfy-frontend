@@ -4,7 +4,7 @@
         profile: null,
         loading: false,
         error: null,
-        updateProfile: null,
+        updateProfile: () => {},
         fetchProfile: async () => {}
     });
 

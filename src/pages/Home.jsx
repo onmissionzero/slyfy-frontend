@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header";
@@ -8,13 +9,23 @@ import useProfile from "../contexts/profile";
 
 function Home() {
   const navigate = useNavigate();
-  const { profile, loading } = useProfile();
+  const { profile, loading, error } = useProfile();
+
+  useEffect(() => {
+    if (!loading && (!profile || error)) {
+      navigate('/login');
+    }
+  }, [loading, profile, error, navigate]);
 
   if (loading) {
     return <div className="text-white font-palanquin font-3xl">Loading...</div>;
-  } 
-  else if (profile === null || profile === undefined) {
-    navigate('/login');
+  }
+
+  if (error) {
+    return <div className="text-white font-palanquin font-3xl">An error occurred. Redirecting...</div>;
+  }
+
+  if (!profile) {
     return <div className="text-white font-palanquin font-3xl">Redirecting...</div>;
   }
 
@@ -26,7 +37,7 @@ function Home() {
         image="https://raw.githubusercontent.com/onmissionzero/slyfy-frontend/main/public/opengraph-image.png"
         url="https://slyfy.vercel.app/"
       />
-      <Header />
+      <Header profile={profile} />
       <Player />
     </>
   );
