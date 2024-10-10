@@ -1,5 +1,5 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Button from '../components/Button';
 import useProfile from '../contexts/profile';
 import Seo from "../components/Seo";
@@ -9,7 +9,13 @@ function Login() {
   const navigate = useNavigate();
   const { profile, loading } = useProfile();
 
-  const handleLogin = () => {
+  useEffect(() => {
+    if (profile) {
+      navigate('/');
+    }
+  }, [profile, navigate]);
+
+  const handleLogin = async () => {
     window.location.replace(`${backendURL}/authorize`);
   };
 
@@ -20,20 +26,16 @@ function Login() {
   if (loading) {
     return <div className="text-white font-palanquin font-3xl">Loading...</div>;
   }
-  else if(profile) {
-    navigate('/');
-    return <div className="text-white font-palanquin font-3xl">Loading...</div>;
-  }
 
   return (
     <>
       <Seo
-      title="Login | Slyfy"
-      description="Login to Slyfy."
-      image="https://raw.githubusercontent.com/onmissionzero/slyfy-frontend/main/public/opengraph-image.png"
-      url="https://slyfy.vercel.app/login"
+        title="Login | Slyfy"
+        description="Login to Slyfy."
+        image="https://raw.githubusercontent.com/onmissionzero/slyfy-frontend/main/public/opengraph-image.png"
+        url="https://slyfy.vercel.app/login"
       />
-      <Button text="Login" handle={handleLogin} />
+      <Button text="Login with Spotify" handle={handleLogin} />
       <div
         className="fixed top-4 right-4 group cursor-pointer flex items-center"
         onClick={handleFAQClick}

@@ -1,30 +1,37 @@
 import { useState, createContext, useContext, useEffect, useCallback } from 'react';
+import useProfile from './profile'; // Adjust the import path if necessary
+import { parseLRC } from '../utils/parseLRC'; // Import your parsing function
 
 const PlayerContext = createContext({
     player: null,
     lyrics: '',
+    parsedLyrics: [],
     isPlaying: false,
     synced: false,
     simulatedProgress: 0,
     fetchCurrentlyPlaying: async () => {},
-    fetchLyrics: async () => {}
+    fetchLyrics: async () => {},
 });
 
 export const PlayerProvider = ({ children }) => {
     const [player, setPlayer] = useState(null);
     const [lyrics, setLyrics] = useState('');
+    const [parsedLyrics, setParsedLyrics] = useState([]);
     const [synced, setSynced] = useState(false);
     const [trackId, setTrackId] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [simulatedProgress, setSimulatedProgress] = useState(0);
 
+    const { tokens, updateTokens } = useProfile(); // Get tokens from ProfileContext
+
     const fetchCurrentlyPlaying = useCallback(async () => {
         try {
             const backendURL = import.meta.env.VITE_BACKEND_URL;
             const response = await fetch(`${backendURL}/currently-playing`, {
-                credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokens.accessToken}`, // Use token here
+                    'X-Refresh-Token': `${tokens.refreshToken}`
                 }
             });
 
@@ -35,6 +42,15 @@ export const PlayerProvider = ({ children }) => {
             }
 
             const data = await response.json();
+            
+            if(data.accessToken) {
+                updateTokens({
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken
+                });
+                return;
+            }
+
             if (data.error) {
                 setPlayer({ error: data.error });
             } else {
@@ -51,13 +67,14 @@ export const PlayerProvider = ({ children }) => {
                 setIsPlaying(isPlaying);
                 if (track_id !== trackId) {
                     setTrackId(track_id);
-                    setLyrics(null);
+                    setLyrics(''); // Reset lyrics when track changes
+                    setParsedLyrics([]); // Reset parsed lyrics
                 }
             }
         } catch (error) {
             setPlayer({ error: error.message });
         }
-    }, [trackId]);
+    }, [trackId, tokens.accessToken]);
 
     const fetchLyrics = useCallback(async () => {
         if (!trackId) return; // No need to fetch lyrics if no trackId
@@ -65,38 +82,53 @@ export const PlayerProvider = ({ children }) => {
         try {
             const backendURL = import.meta.env.VITE_BACKEND_URL;
             const response = await fetch(`${backendURL}/lyrics`, {
-                credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokens.accessToken}`, // Use token here
+                    'X-Refresh-Token': `${tokens.refreshToken}`
                 }
             });
 
             if (!response.ok) {
                 setLyrics('No lyrics found');
+                setParsedLyrics([]); // Clear parsed lyrics on error
                 setSynced(false);
                 return;
             }
 
             const data = await response.json();
+
+            if(data.accessToken) {
+                updateTokens({
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken
+                });
+                return;
+            }
+
             if (data.error) {
                 setLyrics('No lyrics found');
+                setParsedLyrics([]); // Clear parsed lyrics on error
                 setSynced(false);
             } else {
-                setLyrics(data.lyrics || 'No lyrics found');
+                const newLyrics = data.lyrics || 'No lyrics found';
+                setLyrics(newLyrics);
+                setParsedLyrics(parseLRC(newLyrics)); // Parse lyrics
                 setSynced(data.synced || false);
             }
         } catch (error) {
             setLyrics('No lyrics found');
+            setParsedLyrics([]); // Clear parsed lyrics on error
             setSynced(false);
         }
-    }, [trackId]);
+    }, [trackId, tokens.accessToken]);
 
     useEffect(() => {
         fetchCurrentlyPlaying();
 
         const intervalId = setInterval(() => {
             fetchCurrentlyPlaying();
-        }, 5000); // Fetch currently playing track every 3 seconds
+        }, 5000); // Fetch currently playing track every 5 seconds
 
         return () => clearInterval(intervalId);
     }, [fetchCurrentlyPlaying]);
@@ -106,7 +138,7 @@ export const PlayerProvider = ({ children }) => {
     }, [trackId, fetchLyrics]);
 
     return (
-        <PlayerContext.Provider value={{ player, lyrics, synced, isPlaying, simulatedProgress, fetchCurrentlyPlaying, fetchLyrics, setSimulatedProgress }}>
+        <PlayerContext.Provider value={{ player, lyrics, parsedLyrics, synced, isPlaying, simulatedProgress, fetchCurrentlyPlaying, fetchLyrics, setSimulatedProgress }}>
             {children}
         </PlayerContext.Provider>
     );

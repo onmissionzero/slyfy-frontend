@@ -16,14 +16,16 @@ const Header = () => {
     };
 
     const handleLogout = async () => {
-        const backendURL = import.meta.env.VITE_BACKEND_URL;
-        try {
-            await fetch(`${backendURL}/logout`, {
-                method: 'POST',
-                credentials: 'include'
-            });
+        try {    
+            // Clear local storage
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+    
+            // Update profile in context
             setShowDropdown(false);
             updateProfile(null);
+    
+            // Redirect to login page
             navigate('/login');
         } catch (error) {
             console.error('Logout failed:', error);
@@ -69,7 +71,7 @@ const Header = () => {
                     onClick={() => navigate('/')}
                 >
                     <img
-                    src="./android-chrome-512x512.png"
+                    src="./LogoTransparent.png"
                     width={50}
                     height={50}
                     alt="Slyfy Logo"
