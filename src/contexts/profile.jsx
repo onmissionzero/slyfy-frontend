@@ -18,6 +18,26 @@ export const ProfileProvider = ({ children }) => {
     const [loading, setLoading] = useState(true); // Set initial loading to true
     const [error, setError] = useState(null);
 
+    // Update the profile and store it in localStorage
+    const updateProfile = (profileData) => {
+        setProfile(profileData);
+        localStorage.setItem('profile', JSON.stringify(profileData));
+    };
+
+    // Update tokens and store them in localStorage
+    const updateTokens = (newTokens) => {
+        setTokens(newTokens);
+        localStorage.setItem('accessToken', newTokens.accessToken);
+        localStorage.setItem('refreshToken', newTokens.refreshToken);
+    };
+
+    // Retrieve stored tokens from localStorage
+    const getStoredTokens = () => {
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
+        return { accessToken, refreshToken };
+    };
+
     // Fetch profile data from the backend
     const fetchProfile = useCallback(async () => {
         setLoading(true);
@@ -53,27 +73,7 @@ export const ProfileProvider = ({ children }) => {
             setLoading(false);
         }
     }, []);
-
-    // Update the profile and store it in localStorage
-    const updateProfile = (profileData) => {
-        setProfile(profileData);
-        localStorage.setItem('profile', JSON.stringify(profileData));
-    };
-
-    // Update tokens and store them in localStorage
-    const updateTokens = (newTokens) => {
-        setTokens(newTokens);
-        localStorage.setItem('accessToken', newTokens.accessToken);
-        localStorage.setItem('refreshToken', newTokens.refreshToken);
-    };
-
-    // Retrieve stored tokens from localStorage
-    const getStoredTokens = () => {
-        const accessToken = localStorage.getItem('accessToken');
-        const refreshToken = localStorage.getItem('refreshToken');
-        return { accessToken, refreshToken };
-    };
-
+    
     useEffect(() => {
         fetchProfile(); // Directly call fetchProfile to handle initialization
     }, [fetchProfile]);

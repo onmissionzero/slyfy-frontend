@@ -162,7 +162,15 @@ const Lyrics = () => {
     if (isPiP) {
       document.exitPictureInPicture();
     } else {
-      await videoRef.current.requestPictureInPicture();
+      if (videoRef.current.srcObject) {
+        try {
+          await videoRef.current.requestPictureInPicture();
+        } catch (error) {
+          console.warn(error.message);
+        }
+      } else {
+        console.warn("Video element does not have a valid stream.");
+      }
     }
   };
 

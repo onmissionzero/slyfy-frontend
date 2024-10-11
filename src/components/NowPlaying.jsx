@@ -35,7 +35,7 @@ const NowPlaying = () => {
         )}
       </a>
       <div className="ml-2 flex-1">
-        <p className="text-white md:text-2xl text-xl">{track_name}</p>
+        <p className="text-white md:text-2xl text-xl whitespace-nowrap">{track_name}</p>
         <p className="text-[#858585] md:text-base text-sm">{artists}</p>
       </div>
       <div className="flex-grow m-2">

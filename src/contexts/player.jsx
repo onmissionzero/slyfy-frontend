@@ -22,7 +22,7 @@ export const PlayerProvider = ({ children }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [simulatedProgress, setSimulatedProgress] = useState(0);
 
-    const { tokens, updateTokens } = useProfile(); // Get tokens from ProfileContext
+    const { tokens, updateTokens, fetchProfile } = useProfile(); // Get tokens from ProfileContext
 
     const fetchCurrentlyPlaying = useCallback(async () => {
         try {
@@ -48,6 +48,7 @@ export const PlayerProvider = ({ children }) => {
                     accessToken: data.accessToken,
                     refreshToken: data.refreshToken
                 });
+                fetchProfile();
                 return;
             }
 
@@ -74,7 +75,7 @@ export const PlayerProvider = ({ children }) => {
         } catch (error) {
             setPlayer({ error: error.message });
         }
-    }, [trackId, tokens.accessToken]);
+    }, [tokens.accessToken, tokens.refreshToken, updateTokens, fetchProfile, trackId]);
 
     const fetchLyrics = useCallback(async () => {
         if (!trackId) return; // No need to fetch lyrics if no trackId
@@ -103,6 +104,7 @@ export const PlayerProvider = ({ children }) => {
                     accessToken: data.accessToken,
                     refreshToken: data.refreshToken
                 });
+                fetchProfile();
                 return;
             }
 
@@ -121,17 +123,21 @@ export const PlayerProvider = ({ children }) => {
             setParsedLyrics([]); // Clear parsed lyrics on error
             setSynced(false);
         }
-    }, [trackId, tokens.accessToken]);
+    }, [trackId, tokens.accessToken, tokens.refreshToken, updateTokens, fetchProfile]);
 
     useEffect(() => {
-        fetchCurrentlyPlaying();
+        if(tokens.accessToken && tokens.refreshToken) {
+            fetchCurrentlyPlaying();
+        }
 
         const intervalId = setInterval(() => {
-            fetchCurrentlyPlaying();
+            if(tokens.accessToken && tokens.refreshToken) {
+                fetchCurrentlyPlaying();
+            }    
         }, 5000); // Fetch currently playing track every 5 seconds
 
         return () => clearInterval(intervalId);
-    }, [fetchCurrentlyPlaying]);
+    }, [fetchCurrentlyPlaying, tokens.accessToken, tokens.refreshToken]);
 
     useEffect(() => {
         fetchLyrics();
