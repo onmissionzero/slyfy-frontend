@@ -20,7 +20,7 @@ const NowPlaying = () => {
         className="flex m-2 relative group"
       >
         {cover_art && (
-          <div className="relative">
+          <div className="relative" title={track_name}>
             <img
               src={cover_art}
               alt="Cover Art"

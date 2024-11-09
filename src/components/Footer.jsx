@@ -2,7 +2,7 @@
 
 const Footer = () => {
     return (
-        <div className="flex mt-5 text-center justify-center items-center text-white absolute bottom-7">
+        <div className="m-4 flex text-center justify-center items-center text-white fixed bottom-4">
             <p className="font-montserrat">
                 2024 &copy; onmissionzero
             </p>
@@ -19,7 +19,7 @@ const Footer = () => {
                     alt="GitHub Logo"
                     width="20" 
                     height="20" 
-                    className=""
+                    title="onmissionzero's GitHub"
                 />
             </a>
         </div>

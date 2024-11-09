@@ -229,14 +229,17 @@ const Lyrics = () => {
       <canvas ref={canvasRef} width={640} height={360} style={{display: 'none'}}/>
       <video ref={videoRef} autoPlay style={{display: 'none'}}/>
     </div>
-    <button 
-    onClick={togglePiP}
-    className="absolute bottom-5 right-8 px-4 py-2 bg-black text-white rounded
-              transition duration-150 ease-in-out
-              transform hover:scale-110"
-    >
-      Toggle PiP
-    </button>
+    <img  
+      onClick={togglePiP}
+      src="/picture-in-picture.svg"
+      alt="GitHub Logo"
+      width="65" 
+      height="65" 
+      className="absolute bottom-2 right-4 px-4 py-2
+                transition duration-150 ease-in-out
+                transform hover:scale-125"
+      title="Picture-in-Picture"
+    />
     </>
   );
 };

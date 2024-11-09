@@ -39,7 +39,7 @@ function Faq() {
       image="https://raw.githubusercontent.com/onmissionzero/slyfy-frontend/main/public/opengraph-image.png"
       url="https://slyfy.vercel.app/faq"
     />
-    <div className="min-h-screen text-white font-palanquin w-full overflow-hidden">
+    <div className="text-white font-palanquin w-full overflow-hidden">
       <section className="flex flex-col items-center">
         {profile ? (
           <Header />

@@ -75,6 +75,7 @@ const Header = () => {
                     width={50}
                     height={50}
                     alt="Slyfy Logo"
+                    title="Home"
                     />
                     Slyfy
                 </h1>
@@ -83,6 +84,7 @@ const Header = () => {
                     alt="Profile Picture"
                     className="w-11 h-11 rounded-full cursor-pointer transition-transform duration-300 hover:scale-105 ease-in-out border-2 border-transparent hover:border-white"
                     onClick={handleProfileClick}
+                    title="User Navigation"
                 />
             </div>
             {showDropdown && (
@@ -90,19 +92,26 @@ const Header = () => {
                     className="absolute z-50 top-12 right-4 mt-2 w-48 bg-[#121212] text-white p-2 rounded-lg shadow-lg"
                     ref={profileRef}
                 >
+                     <button
+                        onClick={() => navigate('/')}
+                        className="w-full text-left px-4 py-2 rounded hover:bg-[#dbdbdb] hover:text-[#121212]
+                        focus:outline-none focus:bg-[#dbdbdb] focus:text-[#121212]"
+                    >
+                        Home
+                    </button>
+                    <button
+                        onClick={() => navigate('/stats')}
+                        className="w-full text-left px-4 py-2 rounded hover:bg-[#dbdbdb] hover:text-[#121212]
+                        focus:outline-none focus:bg-[#dbdbdb] focus:text-[#121212]"
+                    >
+                        Stats
+                    </button>
                     <button
                         onClick={() => navigate('/faq')}
                         className="w-full text-left px-4 py-2 rounded hover:bg-[#dbdbdb] hover:text-[#121212]
                         focus:outline-none focus:bg-[#dbdbdb] focus:text-[#121212]"
                     >
                         FAQ
-                    </button>
-                    <button
-                        onClick={() => navigate('/settings')}
-                        className="w-full text-left px-4 py-2 rounded hover:bg-[#dbdbdb] hover:text-[#121212]
-                        focus:outline-none focus:bg-[#dbdbdb] focus:text-[#121212]"
-                    >
-                        Settings
                     </button>
                     <hr className="border-[#474747]" />
                     <button 
